@@ -25,7 +25,7 @@ namespace Microsoft.Xbox.Music.Platform.Client
     /// <summary>
     /// Client interface for the Xbox Music API. See http://music.xbox.com/developer
     /// </summary>
-    public interface IXboxMusicClient
+    public interface IXboxMusicClient : IDisposable
     {
         /// <summary>
         /// Timeout applied to all backend service calls.

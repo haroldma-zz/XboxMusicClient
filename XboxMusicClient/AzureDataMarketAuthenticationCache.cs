@@ -23,7 +23,7 @@ namespace Microsoft.Xbox.Music.Platform.Client
     /// <summary>
     /// Basic Azure Data Market (http://datamarket.azure.com/) authentication cache
     /// </summary>
-    public class AzureDataMarketAuthenticationCache
+    public class AzureDataMarketAuthenticationCache : IDisposable
     {
         public class AccessToken
         {
@@ -46,6 +46,11 @@ namespace Microsoft.Xbox.Music.Platform.Client
         {
             this.clientId = clientId;
             this.clientSecret = clientSecret;
+        }
+
+        public void Dispose()
+        {
+            client.Dispose();
         }
 
         /// <summary>

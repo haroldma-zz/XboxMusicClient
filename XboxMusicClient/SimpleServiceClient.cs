@@ -31,17 +31,24 @@ namespace Microsoft.Xbox.Music.Platform.Client
     /// <summary>
     /// Simple REST service client
     /// </summary>
-    public class SimpleServiceClient
+    public class SimpleServiceClient : IDisposable
     {
         private static readonly AssemblyName assemblyName = new AssemblyName(typeof(SimpleServiceClient).Assembly.FullName);
         private static readonly ProductInfoHeaderValue userAgent = new ProductInfoHeaderValue(assemblyName.Name, assemblyName.Version.ToString());
 
-        private readonly JsonSerializer jsonSerializer = new JsonSerializer();
-        public TimeSpan Timeout { get; set; }
+        private static readonly TimeSpan defaultTimeout = TimeSpan.FromSeconds(60);
 
-        public SimpleServiceClient()
+        private readonly JsonSerializer jsonSerializer = new JsonSerializer();
+
+        private readonly Lazy<HttpClient> httpClient = new Lazy<HttpClient>(
+            () => CreateClient(defaultTimeout),
+            LazyThreadSafetyMode.PublicationOnly
+            );
+
+        public TimeSpan Timeout
         {
-            Timeout = TimeSpan.FromSeconds(60);
+            get { return httpClient.Value.Timeout; }
+            set { httpClient.Value.Timeout = value; }
         }
 
         /// <summary>
@@ -67,6 +74,14 @@ namespace Microsoft.Xbox.Music.Platform.Client
             public AuthorizationTokenInvalid? AuthorizationTokenInvalid { get; set; }
         }
 
+        public virtual void Dispose()
+        {
+            if (httpClient.IsValueCreated)
+            {
+                httpClient.Value.Dispose();
+            }
+        }
+
         /// <summary>
         /// Issue an HTTP GET request
         /// </summary>
@@ -78,7 +93,8 @@ namespace Microsoft.Xbox.Music.Platform.Client
         /// <param name="requestParameters">Optional query string parameters</param>
         /// <param name="extraHeaders">Optional HTTP headers</param>
         /// <returns></returns>
-        public async Task<SimpleServiceResult<TResult, TErrorResult>> GetAsync<TResult, TErrorResult>(Uri hostname, string relativeUri,
+        public async Task<SimpleServiceResult<TResult, TErrorResult>> GetAsync<TResult, TErrorResult>(Uri hostname,
+            string relativeUri,
             CancellationToken cancellationToken,
             IEnumerable<KeyValuePair<string, string>> requestParameters = null,
             IEnumerable<KeyValuePair<string, string>> extraHeaders = null)
@@ -87,12 +103,11 @@ namespace Microsoft.Xbox.Music.Platform.Client
         {
             Uri uri = BuildUri(hostname, relativeUri, requestParameters);
 
-            using (HttpClient client = CreateClient(Timeout, extraHeaders))
+            using (HttpRequestMessage httpRequestMessage = CreateHttpRequest(HttpMethod.Get, uri, null, extraHeaders))
+            using (HttpResponseMessage httpResponseMessage = await httpClient.Value.SendAsync(httpRequestMessage, cancellationToken))
             {
-                HttpResponseMessage httpResponseMessage = await client.GetAsync(uri, cancellationToken);
                 return await ParseResponseAsync<TResult, TErrorResult>(httpResponseMessage);
             }
-
         }
 
         public async Task<TResult> GetAsync<TResult>(Uri hostname, string relativeUri,
@@ -129,12 +144,12 @@ namespace Microsoft.Xbox.Music.Platform.Client
         {
             Uri uri = BuildUri(hostname, relativeUri, requestParameters);
 
-            using (HttpClient client = CreateClient(Timeout, extraHeaders))
             using (MemoryStream stream = new MemoryStream())
             using (StreamWriter writer = new StreamWriter(stream))
             using (HttpContent content = CreateHttpContent(requestPayload, writer, stream))
+            using (HttpRequestMessage requestMessage = CreateHttpRequest(HttpMethod.Post, uri, content, extraHeaders))
+            using (HttpResponseMessage result = await httpClient.Value.SendAsync(requestMessage, cancellationToken))
             {
-                HttpResponseMessage result = await client.PostAsync(uri, content, cancellationToken);
                 return await ParseResponseAsync<TResult, TErrorResult>(result);
             }
         }
@@ -161,7 +176,7 @@ namespace Microsoft.Xbox.Music.Platform.Client
             return new Uri(hostname, relUri);
         }
 
-        private static HttpClient CreateClient(TimeSpan timeout, IEnumerable<KeyValuePair<string, string>> extraHeaders)
+        private static HttpClient CreateClient(TimeSpan timeout, IEnumerable<KeyValuePair<string, string>> extraHeaders = null)
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -187,6 +202,25 @@ namespace Microsoft.Xbox.Music.Platform.Client
             HttpContent content = new StreamContent(stream);
             content.Headers.Add("Content-Type", "application/json");
             return content;
+        }
+
+        private static HttpRequestMessage CreateHttpRequest(HttpMethod method, Uri uri, HttpContent content,
+            IEnumerable<KeyValuePair<string, string>> extraHeaders)
+        {
+            HttpRequestMessage message = new HttpRequestMessage(method, uri);
+            if (content != null)
+            {
+                message.Content = content;
+            }
+
+            if (extraHeaders != null)
+            {
+                foreach (var header in extraHeaders)
+                {
+                    message.Headers.Add(header.Key, header.Value);
+                }
+            }
+            return message;
         }
 
         private async Task<SimpleServiceResult<TResult, TErrorResult>> ParseResponseAsync<TResult, TErrorResult>(HttpResponseMessage message)

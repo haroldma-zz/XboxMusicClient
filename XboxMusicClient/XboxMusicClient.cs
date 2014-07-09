@@ -45,6 +45,12 @@ namespace Microsoft.Xbox.Music.Platform.Client
             this.xToken = xToken;
         }
 
+        public override void Dispose()
+        {
+            azureDataMarketAuthenticationCache.Dispose();
+            base.Dispose();
+        }
+
         public IXboxMusicClient CreateUserAuthenticatedClient(IXToken xToken)
         {
             if (xToken == null)
