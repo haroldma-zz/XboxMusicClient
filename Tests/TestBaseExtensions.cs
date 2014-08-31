@@ -51,35 +51,35 @@ namespace Tests
                 Console.WriteLine("Response top level content:");
                 foreach (Content content in response.GetAllTopLevelContent())
                 {
-                    Playlist playlist = content as Playlist;
-                    Artist artist = content as Artist;
-                    Album album = content as Album;
-                    Track track = content as Track;
-                    if (album != null)
+                    XboxPlaylist xboxPlaylist = content as XboxPlaylist;
+                    XboxArtist xboxArtist = content as XboxArtist;
+                    XboxAlbum xboxAlbum = content as XboxAlbum;
+                    XboxTrack xboxTrack = content as XboxTrack;
+                    if (xboxAlbum != null)
                         Console.WriteLine("  {0} {1}: {2}, {3}", content.GetType().Name, content.Id, content.Name,
-                            String.Join(" and ", album.Artists.Select(contributor => contributor.Artist.Name)));
-                    else if (track != null)
+                            String.Join(" and ", xboxAlbum.Artists.Select(contributor => contributor.XboxArtist.Name)));
+                    else if (xboxTrack != null)
                         Console.WriteLine("  {0} {1}: {2}, {3}, {4}", content.GetType().Name, content.Id, content.Name,
-                            track.Album.Name,
-                            String.Join(" and ", track.Artists.Select(contributor => contributor.Artist.Name)));
+                            xboxTrack.XboxAlbum.Name,
+                            String.Join(" and ", xboxTrack.Artists.Select(contributor => contributor.XboxArtist.Name)));
                     else
                         Console.WriteLine("  {0} {1}: {2}", content.GetType().Name, content.Id, content.Name);
 
-                    IPaginatedList<Track> tracks = playlist != null
-                        ? playlist.Tracks
-                        : album != null
-                            ? album.Tracks
-                            : artist != null
-                                ? artist.TopTracks
+                    IXboxPaginatedList<XboxTrack> tracks = xboxPlaylist != null
+                        ? xboxPlaylist.Tracks
+                        : xboxAlbum != null
+                            ? xboxAlbum.Tracks
+                            : xboxArtist != null
+                                ? xboxArtist.TopTracks
                                 : null;
                     if (tracks != null && tracks.ReadOnlyItems != null)
                     {
                         Console.WriteLine("  Contained tracks:");
-                        foreach (Track subTrack in tracks.ReadOnlyItems)
+                        foreach (XboxTrack subTrack in tracks.ReadOnlyItems)
                         {
                             Console.WriteLine("    {0} {1}: {2}, {3}, {4}", subTrack.GetType().Name, subTrack.Id,
-                                subTrack.Name, subTrack.Album != null ? subTrack.Album.Name : null,
-                                String.Join(" and ", subTrack.Artists.Select(contributor => contributor.Artist.Name)));
+                                subTrack.Name, subTrack.XboxAlbum != null ? subTrack.XboxAlbum.Name : null,
+                                String.Join(" and ", subTrack.Artists.Select(contributor => contributor.XboxArtist.Name)));
                         }
                     }
                 }

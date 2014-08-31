@@ -20,7 +20,7 @@ using System.Runtime.Serialization;
 namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
 {
     [DataContract(Namespace = Constants.Xmlns)]
-    public class Track : Content
+    public class XboxAlbum : Content
     {
         // These items are available when this is the main element of the query or if an extra details parameter has been specified for that sub-element
         [DataMember(EmitDefaultValue = false)]
@@ -30,10 +30,13 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
         public TimeSpan? Duration { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public int? TrackNumber { get; set; }
+        public int? TrackCount { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
         public bool? IsExplicit { get; set; }
+
+        [DataMember(EmitDefaultValue = false)]
+        public string LabelName { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
         public GenreList Genres { get; set; }
@@ -42,17 +45,22 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
         public GenreList Subgenres { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public RightList Rights { get; set; }
+        public string AlbumType { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
         public string Subtitle { get; set; }
 
-        // This sub-element is null when this Track is queried as a sub-element of an album (to avoid looping), populated with just the minimal stuff by default when this Track is the main element, and extra details can obtained with a details parameter
-        [DataMember(EmitDefaultValue = false)]
-        public Album Album { get; set; }
-
-        // This sub-element populated with just the minimal stuff by default when this Track is the main element, and extra details can obtained with a details parameter
+        // The following sub-element will be provided with just the minimal stuff unless an extra details parameter is specified for additional sub-element details
         [DataMember(EmitDefaultValue = false)]
         public List<Contributor> Artists { get; set; }
+
+        // The following list require a specific extra details parameter, otherwise it will be null
+        [DataMember(EmitDefaultValue = false)]
+        public XboxPaginatedList<XboxTrack> Tracks { get; set; }
+
+        public XboxAlbum ShallowCopy()
+        {
+            return (XboxAlbum)this.MemberwiseClone();
+        }
     }
 }

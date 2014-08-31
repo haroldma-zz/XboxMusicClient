@@ -13,35 +13,45 @@
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
 
-using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
 {
     [DataContract(Namespace = Constants.Xmlns)]
-    public class Playlist : Content
+    public class XboxArtist : Content
     {
-        [DataMember(EmitDefaultValue = true)] // TrackCount=0 should be serialized too for empty playlists
-        public int TrackCount { get; set; }
+        // These items are available when this is the main element of the query or if an extra details parameter has been specified for that sub-element
 
         [DataMember(EmitDefaultValue = false)]
-        public string Description { get; set; }
+        public GenreList Genres { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public string Owner { get; set; }
+        public GenreList Subgenres { get; set; }
+
+        // The following lists each require a specific extra details parameter, otherwise they will be null
+        [DataMember(EmitDefaultValue = false)]
+        public XboxPaginatedList<XboxAlbum> Albums { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public bool IsReadOnly { get; set; }
+        public XboxPaginatedList<XboxTrack> TopTracks { get; set; }
+    }
+
+    [DataContract(Namespace = Constants.Xmlns)]
+    public class Contributor
+    {
+        public const string MainRole = "Main"; // What EDS shows for the primary XboxArtist
+        public const string DefaultRole = "Other"; // Choice of a default fallback role name in case we can't find the XboxArtist's role in an album/track
 
         [DataMember(EmitDefaultValue = false)]
-        public bool IsPublished { get; set; }
+        public string Role { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public bool UserIsOwner { get; set; }
+        public XboxArtist XboxArtist { get; set; }
 
-        // This sub-element might not be populated in a browse playlists case, but in a lookup it will
-        [DataMember(EmitDefaultValue = false)]
-        public PaginatedList<Track> Tracks { get; set; }
+        public Contributor(string role, XboxArtist xboxArtist)
+        {
+            this.Role = role;
+            this.XboxArtist = xboxArtist;
+        }
     }
 }

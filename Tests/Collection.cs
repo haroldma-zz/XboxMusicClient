@@ -40,7 +40,7 @@ namespace Tests
                 await Client.LookupAsync(playlistId, ContentSource.Collection, country: "US").Log();
             foreach (var track in playlistUsResponse.Playlists.Items.First().Tracks.Items)
             {
-                Console.WriteLine("  Track {0} can be {1} in the US", track.Id, String.Join(" and ", track.Rights));
+                Console.WriteLine("  XboxTrack {0} can be {1} in the US", track.Id, String.Join(" and ", track.Rights));
             }
 
             // Get playlist contents as viewed from Brasil
@@ -49,7 +49,7 @@ namespace Tests
                 await Client.LookupAsync(playlistId, ContentSource.Collection, country: "BR").Log();
             foreach (var track in playlistBrResponse.Playlists.Items.First().Tracks.Items)
             {
-                Console.WriteLine("  Track {0} can be {1} in Brasil", track.Id, String.Join(" and ", track.Rights));
+                Console.WriteLine("  XboxTrack {0} can be {1} in Brasil", track.Id, String.Join(" and ", track.Rights));
             }
         }
 

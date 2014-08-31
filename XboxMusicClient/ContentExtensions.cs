@@ -20,14 +20,14 @@ using Microsoft.Xbox.Music.Platform.Contract.DataModel;
 namespace Microsoft.Xbox.Music.Platform.Client
 {
     /// <summary>
-    /// Artist, album and track content item extensions.
+    /// XboxArtist, XboxAlbum and track content item extensions.
     /// </summary>
     public static class ContentExtensions
     {
         /// <summary>
         /// Get the content item's image URL. Optionally allows specifying resize parameters.
         /// </summary>
-        /// <param name="content">An artist, album or track content item.</param>
+        /// <param name="content">An XboxArtist, XboxAlbum or track content item.</param>
         /// <param name="width">Image width, if set height must be set too.</param>
         /// <param name="height">Image height, if set width must be set too.</param>
         /// <returns>An image URL.</returns>
@@ -84,7 +84,7 @@ namespace Microsoft.Xbox.Music.Platform.Client
         /// <summary>
         /// Get the content's deep linking URL. Optionaly allows specifying an action.
         /// </summary>
-        /// <param name="content">An artist, album or track content item.</param>
+        /// <param name="content">An XboxArtist, XboxAlbum or track content item.</param>
         /// <param name="action">An action to take when the link opens the Xbox Music client.</param>
         /// <returns>The deep link.</returns>
         public static string GetLink(this Content content, LinkAction action = LinkAction.Default)

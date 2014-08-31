@@ -13,38 +13,35 @@
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
 {
-    public interface IPaginatedList<out T>
-    {
-        IEnumerable<T> ReadOnlyItems { get; }
-        string ContinuationToken { get; set; }
-        int TotalItemCount { get; set; }
-    }
-
     [DataContract(Namespace = Constants.Xmlns)]
-    public class PaginatedList<T> : IPaginatedList<T>
+    public class XboxPlaylist : Content
     {
-        [DataMember(EmitDefaultValue = false)]
-        public List<T> Items { get; set; }
-
-        public IEnumerable<T> ReadOnlyItems { get { return Items; } }
+        [DataMember(EmitDefaultValue = true)] // TrackCount=0 should be serialized too for empty playlists
+        public int TrackCount { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public string ContinuationToken { get; set; }
+        public string Description { get; set; }
 
-        /// <summary>
-        /// An estimate count of the total number of items available in the list
-        /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public int TotalItemCount { get; set; }
+        public string Owner { get; set; }
 
-        public PaginatedList()
-        {
-            Items = new List<T>();
-        }
+        [DataMember(EmitDefaultValue = false)]
+        public bool IsReadOnly { get; set; }
+
+        [DataMember(EmitDefaultValue = false)]
+        public bool IsPublished { get; set; }
+
+        [DataMember(EmitDefaultValue = false)]
+        public bool UserIsOwner { get; set; }
+
+        // This sub-element might not be populated in a browse playlists case, but in a lookup it will
+        [DataMember(EmitDefaultValue = false)]
+        public XboxPaginatedList<XboxTrack> Tracks { get; set; }
     }
 }

@@ -55,7 +55,7 @@ namespace Tests
             Client = XboxMusicClientFactory.CreateXboxMusicClient(clientid, clientsecret);
         }
 
-        protected void AssertPaginatedListIsValid<TContent>(PaginatedList<TContent> list, int minItems,
+        protected void AssertPaginatedListIsValid<TContent>(XboxPaginatedList<TContent> list, int minItems,
             int? minTotalItems = null)
         {
             Assert.IsNotNull(list, "Results should contain " + typeof (TContent));

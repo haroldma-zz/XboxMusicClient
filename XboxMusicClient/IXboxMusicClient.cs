@@ -194,7 +194,7 @@ namespace Microsoft.Xbox.Music.Platform.Client
         /// </summary>
         /// <param name="mediaNamespace">"music" only for now.</param>
         /// <param name="operation">Operation to be done on the playlist. Possible values are "create", "update" and "delete".</param>
-        /// <param name="playlistAction">Playlist Id and List of TrackActions. A trackAction is a track ID and an operation (add/delete) to apply on the playlist.</param>
+        /// <param name="playlistAction">XboxPlaylist Id and List of TrackActions. A trackAction is a track ID and an operation (add/delete) to apply on the playlist.</param>
         /// <returns>PlaylistActionResult giving details on the playlist action and a list of TrackActionResults corresponding to the result for each track action. This shows which operations did fail and why</returns>
         Task<PlaylistActionResponse> PlaylistOperationAsync(Namespace mediaNamespace, PlaylistActionType operation,
             PlaylistAction playlistAction);

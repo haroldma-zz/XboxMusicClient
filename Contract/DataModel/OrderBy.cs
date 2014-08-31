@@ -39,7 +39,7 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
         [EnumMember]
         CollectionDate,                 // Collection : date added to the collection
         [EnumMember]
-        TrackNumber,                    // Collection lookup of an album's tracks
+        TrackNumber,                    // Collection lookup of an XboxAlbum's tracks
         [EnumMember]
         MostPopular                     // Catalog
     }

@@ -42,7 +42,43 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Compile Include="**\*.cs" Exclude="obj\**\*" />
+    <Compile Include="AuthenticationDataModel\AzureDataMarketAuthenticationResponse.cs" />
+    <Compile Include="AuthenticationDataModel\IXToken.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="DataModel\XboxAlbum.cs" />
+    <Compile Include="DataModel\XboxArtist.cs" />
+    <Compile Include="DataModel\BaseResponse.cs" />
+    <Compile Include="DataModel\BrowseItemType.cs" />
+    <Compile Include="DataModel\CollectionEdit\ActionResult.cs" />
+    <Compile Include="DataModel\CollectionEdit\IPlaylistEditableMetadata.cs" />
+    <Compile Include="DataModel\CollectionEdit\PlaylistAction.cs" />
+    <Compile Include="DataModel\CollectionEdit\PlaylistActionResponse.cs" />
+    <Compile Include="DataModel\CollectionEdit\PlaylistActionResult.cs" />
+    <Compile Include="DataModel\CollectionEdit\PlaylistActionType.cs" />
+    <Compile Include="DataModel\CollectionEdit\TrackAction.cs" />
+    <Compile Include="DataModel\CollectionEdit\TrackActionRequest.cs" />
+    <Compile Include="DataModel\CollectionEdit\TrackActionResponse.cs" />
+    <Compile Include="DataModel\CollectionEdit\TrackActionResult.cs" />
+    <Compile Include="DataModel\CollectionEdit\TrackActionType.cs" />
+    <Compile Include="DataModel\CollectionState.cs" />
+    <Compile Include="DataModel\Content.cs" />
+    <Compile Include="DataModel\ContentItem.cs" />
+    <Compile Include="DataModel\ContentResponse.cs" />
+    <Compile Include="DataModel\Error.cs" />
+    <Compile Include="DataModel\ExtraDetails.cs" />
+    <Compile Include="DataModel\GenericCollections.cs" />
+    <Compile Include="DataModel\ItemType.cs" />
+    <Compile Include="DataModel\OrderBy.cs" />
+    <Compile Include="DataModel\XboxPaginatedList.cs" />
+    <Compile Include="DataModel\PlatformId.cs" />
+    <Compile Include="DataModel\XboxPlaylist.cs" />
+    <Compile Include="DataModel\Rights.cs" />
+    <Compile Include="DataModel\SearchFilter.cs" />
+    <Compile Include="DataModel\StreamResponse.cs" />
+    <Compile Include="DataModel\XboxTrack.cs" />
+    <Compile Include="DataModel\UserProfileResponse.cs" />
+    <Compile Include="ErrorCode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Contract.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -46,26 +46,26 @@ namespace Tests
             // Search for albums in your current geography
             ContentResponse searchResponse = await client.SearchAsync(Namespace.music, "Foo Fighters", filter: SearchFilter.Albums, maxItems: 5, country: country);
             Console.WriteLine("Found {0} albums", searchResponse.Albums.TotalItemCount);
-            foreach (Album albumResult in searchResponse.Albums.Items)
+            foreach (XboxAlbum albumResult in searchResponse.Albums.Items)
             {
                 Console.WriteLine("{0}", albumResult.Name);
             }
 
-            // List tracks in the first album
-            Album album = searchResponse.Albums.Items[0];
-            ContentResponse lookupResponse = await client.LookupAsync(album.Id, extras: ExtraDetails.Tracks, country: country);
+            // List tracks in the first XboxAlbum
+            XboxAlbum xboxAlbum = searchResponse.Albums.Items[0];
+            ContentResponse lookupResponse = await client.LookupAsync(xboxAlbum.Id, extras: ExtraDetails.Tracks, country: country);
 
-            // Display information about the album
-            album = lookupResponse.Albums.Items[0];
-            Console.WriteLine("Album: {0} (link: {1}, image: {2})", album.Name, album.GetLink(ContentExtensions.LinkAction.Play), album.GetImageUrl(800, 800));
-            foreach (Contributor contributor in album.Artists)
+            // Display information about the XboxAlbum
+            xboxAlbum = lookupResponse.Albums.Items[0];
+            Console.WriteLine("XboxAlbum: {0} (link: {1}, image: {2})", xboxAlbum.Name, xboxAlbum.GetLink(ContentExtensions.LinkAction.Play), xboxAlbum.GetImageUrl(800, 800));
+            foreach (Contributor contributor in xboxAlbum.Artists)
             {
-                Artist artist = contributor.Artist;
-                Console.WriteLine("Artist: {0} (link: {1}, image: {2})", artist.Name, artist.GetLink(), artist.GetImageUrl(1920, 1080));
+                XboxArtist xboxArtist = contributor.XboxArtist;
+                Console.WriteLine("XboxArtist: {0} (link: {1}, image: {2})", xboxArtist.Name, xboxArtist.GetLink(), xboxArtist.GetImageUrl(1920, 1080));
             }
-            foreach (Track track in album.Tracks.Items)
+            foreach (XboxTrack track in xboxAlbum.Tracks.Items)
             {
-                Console.WriteLine("Track: {0} - {1}", track.TrackNumber, track.Name);
+                Console.WriteLine("XboxTrack: {0} - {1}", track.TrackNumber, track.Name);
             }
         }
     }

@@ -24,19 +24,19 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
     public class ContentResponse : BaseResponse
     {
         [DataMember(EmitDefaultValue = false)]
-        public PaginatedList<Artist> Artists { get; set; }
+        public XboxPaginatedList<XboxArtist> Artists { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public PaginatedList<Album> Albums { get; set; }
+        public XboxPaginatedList<XboxAlbum> Albums { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public PaginatedList<Track> Tracks { get; set; }
+        public XboxPaginatedList<XboxTrack> Tracks { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public PaginatedList<Playlist> Playlists { get; set; } 
+        public XboxPaginatedList<XboxPlaylist> Playlists { get; set; } 
 
         [DataMember(EmitDefaultValue = false)]
-        public PaginatedList<ContentItem> Results { get; set; } 
+        public XboxPaginatedList<ContentItem> Results { get; set; } 
 
         [DataMember(EmitDefaultValue = false)]
         public GenreList Genres { get; set; }
@@ -44,7 +44,7 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
         [DataMember(EmitDefaultValue = false)]
         public string Culture { get; set; }
 
-        private void GenericAddPieceOfContent<T>(Content content, PaginatedList<T> container, Func<PaginatedList<T>> containerInstanciator)
+        private void GenericAddPieceOfContent<T>(Content content, XboxPaginatedList<T> container, Func<XboxPaginatedList<T>> containerInstanciator)
             where T : Content
         {
             if (container == null)
@@ -60,21 +60,21 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
 
         public void AddPieceOfContent(Content content)
         {
-            if (content is Artist)
+            if (content is XboxArtist)
             {
-                GenericAddPieceOfContent(content, Artists, () => Artists = new PaginatedList<Artist>());
+                GenericAddPieceOfContent(content, Artists, () => Artists = new XboxPaginatedList<XboxArtist>());
             }
-            else if (content is Album)
+            else if (content is XboxAlbum)
             {
-                GenericAddPieceOfContent(content, Albums, () => Albums = new PaginatedList<Album>());
+                GenericAddPieceOfContent(content, Albums, () => Albums = new XboxPaginatedList<XboxAlbum>());
             }
-            else if (content is Track)
+            else if (content is XboxTrack)
             {
-                GenericAddPieceOfContent(content, Tracks, () => Tracks = new PaginatedList<Track>());
+                GenericAddPieceOfContent(content, Tracks, () => Tracks = new XboxPaginatedList<XboxTrack>());
             }
-            else if (content is Playlist)
+            else if (content is XboxPlaylist)
             {
-                GenericAddPieceOfContent(content, Playlists, () => Playlists = new PaginatedList<Playlist>());
+                GenericAddPieceOfContent(content, Playlists, () => Playlists = new XboxPaginatedList<XboxPlaylist>());
             }
             else
             {
@@ -89,7 +89,7 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
                 .SelectMany(x => x.ReadOnlyItems);
         }
 
-        public IEnumerable<IPaginatedList<Content>> GetAllContentLists()
+        public IEnumerable<IXboxPaginatedList<Content>> GetAllContentLists()
         {
             yield return Artists;
             yield return Albums;

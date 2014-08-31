@@ -13,14 +13,27 @@
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
 
+using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
 {
     [DataContract(Namespace = Constants.Xmlns)]
-    public class Artist : Content
+    public class XboxTrack : Content
     {
         // These items are available when this is the main element of the query or if an extra details parameter has been specified for that sub-element
+        [DataMember(EmitDefaultValue = false)]
+        public DateTime? ReleaseDate { get; set; }
+
+        [DataMember(EmitDefaultValue = false)]
+        public TimeSpan? Duration { get; set; }
+
+        [DataMember(EmitDefaultValue = false)]
+        public int? TrackNumber { get; set; }
+
+        [DataMember(EmitDefaultValue = false)]
+        public bool? IsExplicit { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
         public GenreList Genres { get; set; }
@@ -28,30 +41,18 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
         [DataMember(EmitDefaultValue = false)]
         public GenreList Subgenres { get; set; }
 
-        // The following lists each require a specific extra details parameter, otherwise they will be null
         [DataMember(EmitDefaultValue = false)]
-        public PaginatedList<Album> Albums { get; set; }
-
-        [DataMember(EmitDefaultValue = false)]
-        public PaginatedList<Track> TopTracks { get; set; }
-    }
-
-    [DataContract(Namespace = Constants.Xmlns)]
-    public class Contributor
-    {
-        public const string MainRole = "Main"; // What EDS shows for the primary artist
-        public const string DefaultRole = "Other"; // Choice of a default fallback role name in case we can't find the artist's role in an album/track
+        public RightList Rights { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public string Role { get; set; }
+        public string Subtitle { get; set; }
 
+        // This sub-element is null when this XboxTrack is queried as a sub-element of an XboxAlbum (to avoid looping), populated with just the minimal stuff by default when this XboxTrack is the main element, and extra details can obtained with a details parameter
         [DataMember(EmitDefaultValue = false)]
-        public Artist Artist { get; set; }
+        public XboxAlbum XboxAlbum { get; set; }
 
-        public Contributor(string role, Artist artist)
-        {
-            this.Role = role;
-            this.Artist = artist;
-        }
+        // This sub-element populated with just the minimal stuff by default when this XboxTrack is the main element, and extra details can obtained with a details parameter
+        [DataMember(EmitDefaultValue = false)]
+        public List<Contributor> Artists { get; set; }
     }
 }

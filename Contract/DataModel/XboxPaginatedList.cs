@@ -13,31 +13,38 @@
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
 {
-    //This represented a item that could be either XboxArtist or XboxAlbum. Used for discovery requests.
-    [DataContract(Namespace = Constants.Xmlns)]
-    public class ContentItem
+    public interface IXboxPaginatedList<out T>
     {
-        // FlexHubs are not supported as an ItemType
+        IEnumerable<T> ReadOnlyItems { get; }
+        string ContinuationToken { get; set; }
+        int TotalItemCount { get; set; }
+    }
+
+    [DataContract(Namespace = Constants.Xmlns)]
+    public class XboxPaginatedList<T> : IXboxPaginatedList<T>
+    {
         [DataMember(EmitDefaultValue = false)]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public ItemType Type { get; set; }
+        public List<T> Items { get; set; }
 
-        [DataMember(EmitDefaultValue = false)] 
-        public XboxArtist XboxArtist { get; set; }
+        public IEnumerable<T> ReadOnlyItems { get { return Items; } }
 
         [DataMember(EmitDefaultValue = false)]
-        public XboxAlbum XboxAlbum { get; set; }
+        public string ContinuationToken { get; set; }
 
+        /// <summary>
+        /// An estimate count of the total number of items available in the list
+        /// </summary>
+        [DataMember(EmitDefaultValue = false)]
+        public int TotalItemCount { get; set; }
+
+        public XboxPaginatedList()
+        {
+            Items = new List<T>();
+        }
     }
 }

@@ -34,14 +34,14 @@ namespace Tests
 
             // Lookup Katy Perry's information
             ContentResponse lookupResponse = await Client.LookupAsync(katyPerryId, country: "US").Log();
-            Artist artist = lookupResponse.Artists.Items.First();
+            XboxArtist xboxArtist = lookupResponse.Artists.Items.First();
 
             // Get a 1920x1080 image URL
-            string squareImageUrl = artist.GetImageUrl(1920, 1080);
+            string squareImageUrl = xboxArtist.GetImageUrl(1920, 1080);
             Console.WriteLine("1920x1080 image URL: {0}", squareImageUrl);
 
             // Get the default image URL
-            string defaultImageUrl = artist.ImageUrl;
+            string defaultImageUrl = xboxArtist.ImageUrl;
             Console.WriteLine("Default image URL: {0}", defaultImageUrl);
         }
     }

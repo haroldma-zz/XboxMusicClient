@@ -35,8 +35,8 @@ namespace Tests
             AssertPaginatedListIsValid(browseResults.Tracks, 25, 100);
 
             // Request a preview stream URL for the first one
-            Track track = browseResults.Tracks.Items.First();
-            StreamResponse streamResponse = await Client.PreviewAsync(track.Id, ClientInstanceId, country: "GB").Log();
+            XboxTrack xboxTrack = browseResults.Tracks.Items.First();
+            StreamResponse streamResponse = await Client.PreviewAsync(xboxTrack.Id, ClientInstanceId, country: "GB").Log();
             Assert.IsNotNull(streamResponse, "The preview stream URL response should not be null");
             Assert.IsNotNull(streamResponse.Url, "The preview stream URL should not be null");
             Assert.IsNotNull(streamResponse.ContentType, "The preview stream content type should not be null");
@@ -58,9 +58,9 @@ namespace Tests
             Assert.IsNotNull(browseResults, "The browse response should not be null");
             AssertPaginatedListIsValid(browseResults.Tracks, 25, 100);
 
-            // Stream the first streamable track
-            Track track = browseResults.Tracks.Items.First(t => t.Rights.Contains("Stream"));
-            StreamResponse streamResponse = await AuthenticatedClient.StreamAsync(track.Id, ClientInstanceId).Log();
+            // Stream the first streamable XboxTrack
+            XboxTrack xboxTrack = browseResults.Tracks.Items.First(t => t.Rights.Contains("Stream"));
+            StreamResponse streamResponse = await AuthenticatedClient.StreamAsync(xboxTrack.Id, ClientInstanceId).Log();
             Assert.IsNotNull(streamResponse, "The stream URL response should not be null");
             Assert.IsNotNull(streamResponse.Url, "The stream URL should not be null");
             Assert.IsNotNull(streamResponse.ContentType, "The stream content type should not be null");
