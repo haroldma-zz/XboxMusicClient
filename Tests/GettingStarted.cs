@@ -60,8 +60,8 @@ namespace Tests
             Console.WriteLine("XboxAlbum: {0} (link: {1}, image: {2})", xboxAlbum.Name, xboxAlbum.GetLink(ContentExtensions.LinkAction.Play), xboxAlbum.GetImageUrl(800, 800));
             foreach (Contributor contributor in xboxAlbum.Artists)
             {
-                XboxArtist xboxArtist = contributor.XboxArtist;
-                Console.WriteLine("XboxArtist: {0} (link: {1}, image: {2})", xboxArtist.Name, xboxArtist.GetLink(), xboxArtist.GetImageUrl(1920, 1080));
+                XboxArtist xboxArtist = contributor.Artist;
+                Console.WriteLine("Artist: {0} (link: {1}, image: {2})", xboxArtist.Name, xboxArtist.GetLink(), xboxArtist.GetImageUrl(1920, 1080));
             }
             foreach (XboxTrack track in xboxAlbum.Tracks.Items)
             {

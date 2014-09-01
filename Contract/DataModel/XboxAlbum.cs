@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
@@ -57,6 +58,10 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
         // The following list require a specific extra details parameter, otherwise it will be null
         [DataMember(EmitDefaultValue = false)]
         public XboxPaginatedList<XboxTrack> Tracks { get; set; }
+
+        //Minimal details unless requested extra data
+        [DataMember(EmitDefaultValue = false)]
+        public XboxArtist PrimaryArtist { get { return Artists.First(p => p.Role == "Main").Artist; } }
 
         public XboxAlbum ShallowCopy()
         {

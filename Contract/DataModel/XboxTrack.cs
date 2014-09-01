@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
@@ -54,5 +55,9 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
         // This sub-element populated with just the minimal stuff by default when this XboxTrack is the main element, and extra details can obtained with a details parameter
         [DataMember(EmitDefaultValue = false)]
         public List<Contributor> Artists { get; set; }
+
+        //Minimal details unless requested extra data
+        [DataMember(EmitDefaultValue = false)]
+        public XboxArtist PrimaryArtist { get { return Artists.First(p => p.Role == "Main").Artist; } }
     }
 }

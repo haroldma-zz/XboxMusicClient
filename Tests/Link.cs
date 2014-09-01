@@ -36,10 +36,10 @@ namespace Tests
             ContentResponse lookupResponse = await Client.LookupAsync(katyPerryId, extras: ExtraDetails.Albums, country: "US").Log();
             XboxArtist xboxArtist = lookupResponse.Artists.Items.First();
 
-            // Create a link to Katy Perry's XboxArtist page in an Xbox Music client
+            // Create a link to Katy Perry's Artist page in an Xbox Music client
             string artistPageDeepLink = xboxArtist.Link;
-            Console.WriteLine("XboxArtist page deep link: {0}", artistPageDeepLink);
-            Assert.IsNotNull(artistPageDeepLink, "The XboxArtist page deep link should not be null");
+            Console.WriteLine("Artist page deep link: {0}", artistPageDeepLink);
+            Assert.IsNotNull(artistPageDeepLink, "The Artist page deep link should not be null");
 
             // Create a link which starts playback of Katy Perry's latest XboxAlbum in the US (exclude singles and EPs)
             XboxAlbum xboxAlbum = xboxArtist.Albums.Items.First(a => a.AlbumType == "XboxAlbum");

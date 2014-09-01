@@ -39,19 +39,19 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
     [DataContract(Namespace = Constants.Xmlns)]
     public class Contributor
     {
-        public const string MainRole = "Main"; // What EDS shows for the primary XboxArtist
-        public const string DefaultRole = "Other"; // Choice of a default fallback role name in case we can't find the XboxArtist's role in an album/track
+        public const string MainRole = "Main"; // What EDS shows for the primary Artist
+        public const string DefaultRole = "Other"; // Choice of a default fallback role name in case we can't find the Artist's role in an album/track
 
         [DataMember(EmitDefaultValue = false)]
         public string Role { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public XboxArtist XboxArtist { get; set; }
+        public XboxArtist Artist { get; set; }
 
-        public Contributor(string role, XboxArtist xboxArtist)
+        public Contributor(string role, XboxArtist artist)
         {
             this.Role = role;
-            this.XboxArtist = xboxArtist;
+            this.Artist = artist;
         }
     }
 }

@@ -57,11 +57,11 @@ namespace Tests
                     XboxTrack xboxTrack = content as XboxTrack;
                     if (xboxAlbum != null)
                         Console.WriteLine("  {0} {1}: {2}, {3}", content.GetType().Name, content.Id, content.Name,
-                            String.Join(" and ", xboxAlbum.Artists.Select(contributor => contributor.XboxArtist.Name)));
+                            String.Join(" and ", xboxAlbum.Artists.Select(contributor => contributor.Artist.Name)));
                     else if (xboxTrack != null)
                         Console.WriteLine("  {0} {1}: {2}, {3}, {4}", content.GetType().Name, content.Id, content.Name,
                             xboxTrack.XboxAlbum.Name,
-                            String.Join(" and ", xboxTrack.Artists.Select(contributor => contributor.XboxArtist.Name)));
+                            String.Join(" and ", xboxTrack.Artists.Select(contributor => contributor.Artist.Name)));
                     else
                         Console.WriteLine("  {0} {1}: {2}", content.GetType().Name, content.Id, content.Name);
 
@@ -79,7 +79,7 @@ namespace Tests
                         {
                             Console.WriteLine("    {0} {1}: {2}, {3}, {4}", subTrack.GetType().Name, subTrack.Id,
                                 subTrack.Name, subTrack.XboxAlbum != null ? subTrack.XboxAlbum.Name : null,
-                                String.Join(" and ", subTrack.Artists.Select(contributor => contributor.XboxArtist.Name)));
+                                String.Join(" and ", subTrack.Artists.Select(contributor => contributor.Artist.Name)));
                         }
                     }
                 }
