@@ -32,7 +32,7 @@ namespace Tests
         {
             const string katyPerryId = "music.97e60200-0200-11db-89ca-0019b92a3933";
 
-            // Lookup Katy Perry's information, including latest XboxAlbum releases
+            // Lookup Katy Perry's information, including latest Album releases
             ContentResponse lookupResponse = await Client.LookupAsync(katyPerryId, extras: ExtraDetails.Albums, country: "US").Log();
             XboxArtist xboxArtist = lookupResponse.Artists.Items.First();
 
@@ -41,11 +41,11 @@ namespace Tests
             Console.WriteLine("Artist page deep link: {0}", artistPageDeepLink);
             Assert.IsNotNull(artistPageDeepLink, "The Artist page deep link should not be null");
 
-            // Create a link which starts playback of Katy Perry's latest XboxAlbum in the US (exclude singles and EPs)
-            XboxAlbum xboxAlbum = xboxArtist.Albums.Items.First(a => a.AlbumType == "XboxAlbum");
+            // Create a link which starts playback of Katy Perry's latest Album in the US (exclude singles and EPs)
+            XboxAlbum xboxAlbum = xboxArtist.Albums.Items.First(a => a.AlbumType == "Album");
             string albumPlayDeepLink = xboxAlbum.GetLink(ContentExtensions.LinkAction.Play);
-            Console.WriteLine("XboxAlbum play deep link: {0}", albumPlayDeepLink);
-            Assert.IsNotNull(albumPlayDeepLink, "The XboxAlbum play deep link should not be null");
+            Console.WriteLine("Album play deep link: {0}", albumPlayDeepLink);
+            Assert.IsNotNull(albumPlayDeepLink, "The Album play deep link should not be null");
         }
     }
 }

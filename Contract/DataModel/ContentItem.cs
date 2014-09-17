@@ -24,7 +24,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
 {
-    //This represented a item that could be either Artist or XboxAlbum. Used for discovery requests.
+    //This represented a item that could be either Artist or Album. Used for discovery requests.
     [DataContract(Namespace = Constants.Xmlns)]
     public class ContentItem
     {

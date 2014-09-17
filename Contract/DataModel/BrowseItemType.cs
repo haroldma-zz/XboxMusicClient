@@ -20,7 +20,7 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
 {
     /// <summary>
     /// Represents a single item type that has subitems browing capabilities.
-    /// For example, an Artist has albums that can be browsed, an XboxAlbum has tracks that can be browsed, etc.
+    /// For example, an Artist has albums that can be browsed, an Album has tracks that can be browsed, etc.
     /// </summary>
     [DataContract(Namespace = Constants.Xmlns)]
     public enum BrowseItemType : byte

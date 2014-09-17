@@ -48,16 +48,12 @@ namespace Microsoft.Xbox.Music.Platform.Contract.DataModel
         [DataMember(EmitDefaultValue = false)]
         public string Subtitle { get; set; }
 
-        // This sub-element is null when this XboxTrack is queried as a sub-element of an XboxAlbum (to avoid looping), populated with just the minimal stuff by default when this XboxTrack is the main element, and extra details can obtained with a details parameter
+        // This sub-element is null when this XboxTrack is queried as a sub-element of an Album (to avoid looping), populated with just the minimal stuff by default when this XboxTrack is the main element, and extra details can obtained with a details parameter
         [DataMember(EmitDefaultValue = false)]
-        public XboxAlbum XboxAlbum { get; set; }
+        public XboxAlbum Album { get; set; }
 
         // This sub-element populated with just the minimal stuff by default when this XboxTrack is the main element, and extra details can obtained with a details parameter
         [DataMember(EmitDefaultValue = false)]
         public List<Contributor> Artists { get; set; }
-
-        //Minimal details unless requested extra data
-        [DataMember(EmitDefaultValue = false)]
-        public XboxArtist PrimaryArtist { get { return Artists.First(p => p.Role == "Main").Artist; } }
     }
 }

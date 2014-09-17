@@ -46,14 +46,14 @@ namespace Tests
             Assert.IsNull(continuedSearchResults.Albums, "The continued search response should not contain albums");
             AssertPaginatedListIsValid(continuedSearchResults.Tracks, 25, 100);
 
-            // List tracks in the first XboxAlbum
+            // List tracks in the first Album
             XboxAlbum firstXboxAlbum = searchResults.Albums.Items.First();
             ContentResponse albumTrackResults = await Client.LookupAsync(firstXboxAlbum.Id, extras: ExtraDetails.Tracks, country: "US").Log();
             AssertPaginatedListIsValid(albumTrackResults.Albums, 1);
             XboxAlbum firstXboxAlbumLookup = albumTrackResults.Albums.Items.First();
-            Assert.AreEqual(firstXboxAlbum.Id, firstXboxAlbumLookup.Id, "XboxAlbum ids should be the same");
-            Assert.IsNotNull(firstXboxAlbumLookup.Tracks, "XboxAlbum should have tracks");
-            Assert.IsNotNull(firstXboxAlbumLookup.Tracks.Items, "XboxAlbum should have tracks");
+            Assert.AreEqual(firstXboxAlbum.Id, firstXboxAlbumLookup.Id, "Album ids should be the same");
+            Assert.IsNotNull(firstXboxAlbumLookup.Tracks, "Album should have tracks");
+            Assert.IsNotNull(firstXboxAlbumLookup.Tracks.Items, "Album should have tracks");
         }
 
         [TestMethod, TestCategory("Anonymous")]

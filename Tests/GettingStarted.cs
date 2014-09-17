@@ -51,13 +51,13 @@ namespace Tests
                 Console.WriteLine("{0}", albumResult.Name);
             }
 
-            // List tracks in the first XboxAlbum
+            // List tracks in the first Album
             XboxAlbum xboxAlbum = searchResponse.Albums.Items[0];
             ContentResponse lookupResponse = await client.LookupAsync(xboxAlbum.Id, extras: ExtraDetails.Tracks, country: country);
 
-            // Display information about the XboxAlbum
+            // Display information about the Album
             xboxAlbum = lookupResponse.Albums.Items[0];
-            Console.WriteLine("XboxAlbum: {0} (link: {1}, image: {2})", xboxAlbum.Name, xboxAlbum.GetLink(ContentExtensions.LinkAction.Play), xboxAlbum.GetImageUrl(800, 800));
+            Console.WriteLine("Album: {0} (link: {1}, image: {2})", xboxAlbum.Name, xboxAlbum.GetLink(ContentExtensions.LinkAction.Play), xboxAlbum.GetImageUrl(800, 800));
             foreach (Contributor contributor in xboxAlbum.Artists)
             {
                 XboxArtist xboxArtist = contributor.Artist;

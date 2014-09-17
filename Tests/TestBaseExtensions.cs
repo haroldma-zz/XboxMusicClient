@@ -60,7 +60,7 @@ namespace Tests
                             String.Join(" and ", xboxAlbum.Artists.Select(contributor => contributor.Artist.Name)));
                     else if (xboxTrack != null)
                         Console.WriteLine("  {0} {1}: {2}, {3}, {4}", content.GetType().Name, content.Id, content.Name,
-                            xboxTrack.XboxAlbum.Name,
+                            xboxTrack.Album.Name,
                             String.Join(" and ", xboxTrack.Artists.Select(contributor => contributor.Artist.Name)));
                     else
                         Console.WriteLine("  {0} {1}: {2}", content.GetType().Name, content.Id, content.Name);
@@ -78,7 +78,7 @@ namespace Tests
                         foreach (XboxTrack subTrack in tracks.ReadOnlyItems)
                         {
                             Console.WriteLine("    {0} {1}: {2}, {3}, {4}", subTrack.GetType().Name, subTrack.Id,
-                                subTrack.Name, subTrack.XboxAlbum != null ? subTrack.XboxAlbum.Name : null,
+                                subTrack.Name, subTrack.Album != null ? subTrack.Album.Name : null,
                                 String.Join(" and ", subTrack.Artists.Select(contributor => contributor.Artist.Name)));
                         }
                     }
